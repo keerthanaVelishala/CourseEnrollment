@@ -10,23 +10,35 @@
 			"name": "getClasses",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "http://localhost:8080/courses/"
 			},
 			"response": []
 		},
 		{
 			"name": "addClass",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Data Mining\",\n  \"subject\": \"DM\",\n  \"maxStudents\": 40,\n  \"semester\": \"2024 Summer\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/courses/create"
 			},
 			"response": []
 		},
 		{
 			"name": "deleteClassById",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/courses/4"
 			},
 			"response": []
 		},
@@ -34,23 +46,44 @@
 			"name": "getClassById",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "http://localhost:8080/courses/4"
 			},
 			"response": []
 		},
 		{
 			"name": "updateClassById",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"courseCode\": 4,\n        \"name\": \"DM\",\n        \"subject\": \"DM\",\n        \"maxStudents\": 40,\n        \"semester\": \"2024 Summer\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/courses/update/4"
 			},
 			"response": []
 		},
 		{
 			"name": "addStudent",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Poojitha\",\n  \"major\": \"BAIS\",\n  \"expectedGraduationDate\": \"2024-12-10\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/students/create"
 			},
 			"response": []
 		},
@@ -58,15 +91,26 @@
 			"name": "getStudentById",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "http://localhost:8080/students/5"
 			},
 			"response": []
 		},
 		{
 			"name": "updateStudentById",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Poo\",\n    \"major\": \"BAIS\",\n    \"expectedGraduationDate\": \"2024-12-10T00:00:00.000+00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/students/update/1"
 			},
 			"response": []
 		},
@@ -74,15 +118,26 @@
 			"name": "getStudents",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "http://localhost:8080/students/"
 			},
 			"response": []
 		},
 		{
 			"name": "enrollStudent",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/courses/1/enroll/4"
 			},
 			"response": []
 		},
@@ -90,15 +145,17 @@
 			"name": "getStudentsByCourseId",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "http://localhost:8080/courses/1/students"
 			},
 			"response": []
 		},
 		{
 			"name": "UnenrollStudentById",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/courses/enrollments/1"
 			},
 			"response": []
 		},
@@ -106,15 +163,17 @@
 			"name": "getAllCoursesByStudentId",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "http://localhost:8080/students/4/courses"
 			},
 			"response": []
 		},
 		{
 			"name": "deleteStudentById",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/students/5"
 			},
 			"response": []
 		}
