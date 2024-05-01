@@ -1,0 +1,112 @@
+body 
+{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .student-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+  
+  .student-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333333;
+  }
+  
+  .student-form input[type="text"],
+  .student-form input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+  }
+  
+  .student-form button {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .student-form button:hover {
+    background-color: #004494;
+  }
+  
+  .student-list table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .student-list th,
+  .student-list td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .student-list th {
+    background-color: #f8f8f8;
+    color: #333333;
+  }
+  
+  .student-list tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  .student-list table .action-button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .student-list table .edit-button {
+    color: #ffffff;
+    background-color: #4CAF50; 
+  }
+  
+  .student-list table .delete-button {
+    color: #ffffff;
+    background-color: #f44336; 
+  }
+  
+  .student-list table .action-button:hover {
+    opacity: 0.8;
+  }
+  
+  .student-list table .action-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(21,156,228,0.4);
+  }
+  
+  @media (max-width: 600px) {
+    .student-form input[type="text"],
+    .student-form input[type="date"],
+    .student-form button {
+      width: 100%;
+    }
+  
+    .student-list table {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+
+
+  

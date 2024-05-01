@@ -1,0 +1,18 @@
+<h2>Students in Course</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Major</th>
+    <th>Graduation Date</th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor="let student of allStudents">
+    <td>{{ student.name }}</td>
+    <td>{{ student.major }}</td>
+    <td>{{ student.expectedGraduationDate }}</td>
+    <td>
+      <button *ngIf="isEnrolled(student)" (click)="deleteStudent(student.studentId)">Delete</button>
+      <button *ngIf="!isEnrolled(student)" (click)="addStudent(student.studentId)">Add</button>
+    </td>
+  </tr>
+</table>

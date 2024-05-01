@@ -1,0 +1,62 @@
+<div class="student-form">
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" *ngIf="editStudentId === null">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name" required>
+      </div>
+      <div>
+        <label for="major">Major:</label>
+        <input type="text" id="major" formControlName="major" required>
+      </div>
+      <div>
+        <label for="expectedGraduationDate">Expected Graduation Date:</label>
+        <input type="date" id="expectedGraduationDate" formControlName="expectedGraduationDate" required>
+      </div>
+      <button type="submit" [disabled]="!studentForm.valid">Add Student</button>
+    </form>
+  </div>
+
+  <div class="student-form" *ngIf="editStudentId !== null">
+    <form [formGroup]="editForm">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name" required>
+      </div>
+      <div>
+        <label for="major">Major:</label>
+        <input type="text" id="major" formControlName="major" required>
+      </div>
+      <div>
+        <label for="expectedGraduationDate">Expected Graduation Date:</label>
+        <input type="date" id="expectedGraduationDate" formControlName="expectedGraduationDate" required>
+      </div>
+      <button type="button" [disabled]="!editForm.valid" (click)="onSave(editStudentId)" style="border-radius: 15px; margin: 5px;">Save</button>
+      <button type="button" (click)="onCancelEdit()" style="border-radius: 15px;" >Cancel</button>
+    </form>
+  </div>
+  
+
+<div class="student-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Major</th>
+          <th>Expected Graduation Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students">
+          <td><a [routerLink]="['/students', student.studentId, 'courses']">{{ student.studentId }}</a></td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.major }}</td>
+          <td>{{ student.expectedGraduationDate | date:'yyyy-MM-dd' }}</td>
+          <td>
+            <button class="action-button edit-button" (click)="onEdit(student)">Edit</button>
+            <button class="action-button delete-button" (click)="deleteStudent(student.studentId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

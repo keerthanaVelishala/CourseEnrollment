@@ -1,0 +1,50 @@
+<br><br><br>
+<form [formGroup]="courseForm" *ngIf="editCourseId === null" (ngSubmit)="onSubmit()">
+  <input type="text" formControlName="name" placeholder="Name" required>
+  <input type="text" formControlName="subject" placeholder="Subject" required>
+  <input type="number" formControlName="maxStudents" placeholder="Max Students" required>
+  <input type="text" formControlName="semester" placeholder="Semester" required>
+  <button type="submit" [disabled]="!courseForm.valid">Add New Course</button>
+</form>
+
+<form [formGroup]="editForm" *ngIf="editCourseId !== null">
+    <td><input type="text" formControlName="name"></td>
+    <td><input type="text" formControlName="subject"></td>
+    <td><input type="number" formControlName="maxStudents"></td>
+    <td><input type="text" formControlName="semester"></td>
+    <td>
+    <button type="button" (click)="onSave(editCourseId)">Save</button>
+    <button type="button" (click)="onCancelEdit()">Cancel</button>
+    </td>
+</form>
+
+<br>
+<br>
+<br>
+<table>
+  <thead>
+    <tr>
+      <th>Course Code</th>
+      <th>Name</th>
+      <th>Subject</th>
+      <th>Max Students</th>
+      <th>Semester</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let course of courses">
+      <td><a [routerLink]="['/courses', course.courseCode, 'students']">{{ course.courseCode }}</a></td>
+      <ng-container *ngIf="editCourseId !== course.courseCode">
+        <td>{{ course.name }}</td>
+        <td>{{ course.subject }}</td>
+        <td>{{ course.maxStudents }}</td>
+        <td>{{ course.semester }}</td>
+        <td>
+          <button (click)="onEdit(course)">Edit</button>
+          <button (click)="deleteCourse(course.courseCode)">Delete</button>
+        </td>
+      </ng-container>
+    </tr>
+  </tbody>
+</table>

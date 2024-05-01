@@ -1,0 +1,30 @@
+<div class="course-container">
+    <h1>Student Courses</h1>
+    <div class="courses-list">
+      <table>
+        <thead>
+          <tr>
+            <th>Course Code</th>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Max Students</th>
+            <th>Semester</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of AllCourses">
+            <td>{{ course.courseCode }}</td>
+            <td>{{ course.name }}</td>
+            <td>{{ course.subject }}</td>
+            <td>{{ course.maxStudents }}</td>
+            <td>{{ course.semester }}</td>
+            <td>
+                <button class="action-button enroll-button" *ngIf="!isEnrolled(course)" (click)="enrollStudent(course.courseCode)">Enroll</button>
+                <button class="action-button unenroll-button" *ngIf="isEnrolled(course)" (click)="unenrollStudent(course.courseCode)">Unenroll</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
