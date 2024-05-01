@@ -4,7 +4,10 @@ import com.sample.classenrollment.models.Course;
 import com.sample.classenrollment.models.CourseStudent;
 import com.sample.classenrollment.models.Student;
 import com.sample.classenrollment.repositories.CourseRepository;
+import com.sample.classenrollment.repositories.CourseStudentRepository;
 import com.sample.classenrollment.services.CourseService;
+import com.sample.classenrollment.services.StudentService;
+import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +20,16 @@ public class CourseController {
 
     private CourseService courseService;
 
-    public CourseController(CourseService courseService){
+    private CourseStudentRepository courseStudentRepository;
+
+    private StudentService studentService;
+
+    public CourseController(CourseService courseService, CourseStudentRepository courseStudentRepository, StudentService studentService){
         this.courseService = courseService;
+        this.courseStudentRepository = courseStudentRepository;
+        this.studentService = studentService;
     }
+
 
     @GetMapping("/")
     public ResponseEntity<List<Course>> getCourses() {
@@ -44,18 +54,34 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
+        Course course = courseService.getCourseById(id);
+        if(course==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return ResponseEntity.ok().body(courseService.getCourseById(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Course> deleteCourseById(@PathVariable Long id){
+    public ResponseEntity<Object> deleteCourseById(@PathVariable Long id){
+        Course course = courseService.getCourseById(id);
+        if(course==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<CourseStudent> courseStudents = courseStudentRepository.findByCourseCode(course);
+        if (!courseStudents.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Cannot delete course, course has student enrollments"));
+        }
         courseService.deleteById(id);
         return ResponseEntity.ok().body(null);
     }
 
     @GetMapping("/{id}/students")
-    public List<Student> getStudentsInClass(@PathVariable Long id) {
-        return courseService.getStudentsInClass(id);
+    public ResponseEntity<List<Student>> getStudentsInClass(@PathVariable Long id) {
+        Course course = courseService.getCourseById(id);
+        if(course==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok().body(courseService.getStudentsInClass(id));
     }
 
     @PostMapping("/{id}/enroll/{studentId}")
@@ -63,9 +89,18 @@ public class CourseController {
         return new ResponseEntity<>(courseService.enrollStudent(id, studentId), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/enrollments/{enrollmentId}")
-    public ResponseEntity<Void> unenrollStudent(@PathVariable Long enrollmentId) {
-        courseService.unenrollStudent(enrollmentId);
+    @DeleteMapping("/{id}/enroll/{studentId}")
+    public ResponseEntity<Void> unenrollStudent(@PathVariable Long id, @PathVariable Long studentId) {
+        Course course = courseService.getCourseById(id);
+        if(course==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Student student = studentService.getStudentById(studentId);
+        if(student==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        courseService.unenrollStudent(course,student);
         return ResponseEntity.ok().build();
     }
 

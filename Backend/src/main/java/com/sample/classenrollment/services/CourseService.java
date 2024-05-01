@@ -59,7 +59,7 @@ public class CourseService {
         return courseStudentRepository.save(enrollment);
     }
 
-    public void unenrollStudent(Long enrollmentId) {
-        courseStudentRepository.deleteById(enrollmentId);
+    public void unenrollStudent(Course course,Student student) {
+        courseStudentRepository.findByCourseCodeAndStudentId(course,student);
     }
 }

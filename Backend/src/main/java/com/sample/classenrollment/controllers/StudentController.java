@@ -1,14 +1,19 @@
 package com.sample.classenrollment.controllers;
 
 import com.sample.classenrollment.models.Course;
+import com.sample.classenrollment.models.CourseStudent;
 import com.sample.classenrollment.models.Student;
+import com.sample.classenrollment.repositories.CourseStudentRepository;
 import com.sample.classenrollment.services.CourseService;
 import com.sample.classenrollment.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/students")
@@ -17,6 +22,8 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private CourseStudentRepository courseStudentRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<Student>> getStudents() {
@@ -44,13 +51,27 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Student> deleteStudentById(@PathVariable Long id){
+    public ResponseEntity<Object> deleteStudentById(@PathVariable Long id){
+        Student student = studentService.getStudentById(id);
+        if (student == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<CourseStudent> courseStudents = courseStudentRepository.findByStudentId(student);
+        if (!courseStudents.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Cannot delete student, student has enrollments"));
+        }
+
         studentService.deleteById(id);
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(Map.of("message", "Student deleted successfully"));
     }
 
     @GetMapping("/{studentId}/courses")
-    public List<Course> getClassesForStudent(@PathVariable Long studentId) {
-        return studentService.getClassesForStudent(studentId);
+    public ResponseEntity<List<Course>> getClassesForStudent(@PathVariable Long studentId) {
+        Student student = studentService.getStudentById(studentId);
+        if (student == null) {
+            return ResponseEntity.notFound().build(); // Returns a 404 if the student is not found
+        }
+        return  ResponseEntity.ok().body(studentService.getClassesForStudent(studentId));
     }
 }
