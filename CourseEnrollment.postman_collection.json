@@ -155,7 +155,7 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8080/courses/enrollments/1"
+				"url": "http://localhost:8080/courses/1/enroll/4"
 			},
 			"response": []
 		},
