@@ -59,7 +59,11 @@ This project implements a REST API using Spring Boot for managing courses and st
 
 - **MySQL**:
   - The project uses SQLite as the database for both development and testing. It is a lightweight, file-based database, which simplifies the configuration and deployment processes.
-
+    
+## Manual Testing
+- **PostMan**:
+  - created a postman collection and tested all the end points.
+    
 ## How to Run
 
 - To run the application, use the following command:
