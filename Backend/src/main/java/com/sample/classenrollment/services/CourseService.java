@@ -60,6 +60,7 @@ public class CourseService {
     }
 
     public void unenrollStudent(Course course,Student student) {
-        courseStudentRepository.findByCourseCodeAndStudentId(course,student);
+        Optional<CourseStudent> enrollment = courseStudentRepository.findByCourseCodeAndStudentId(course, student);
+        enrollment.ifPresent(courseStudentRepository::delete);
     }
 }
