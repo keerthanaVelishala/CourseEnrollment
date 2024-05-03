@@ -2,6 +2,7 @@ package com.sample.classenrollment.services;
 
 import com.sample.classenrollment.models.Course;
 import com.sample.classenrollment.models.CourseStudent;
+import com.sample.classenrollment.models.EnrollmentInfoDTO;
 import com.sample.classenrollment.models.Student;
 import com.sample.classenrollment.repositories.CourseRepository;
 import com.sample.classenrollment.repositories.CourseStudentRepository;
@@ -62,5 +63,10 @@ public class CourseService {
     public void unenrollStudent(Course course,Student student) {
         Optional<CourseStudent> enrollment = courseStudentRepository.findByCourseCodeAndStudentId(course, student);
         enrollment.ifPresent(courseStudentRepository::delete);
+    }
+
+    public List<EnrollmentInfoDTO> viewAll(){
+        List<EnrollmentInfoDTO> allRecords = courseStudentRepository.findAllEnrollmentDetails();
+        return allRecords;
     }
 }

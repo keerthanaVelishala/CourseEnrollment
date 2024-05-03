@@ -75,4 +75,6 @@ public class StudentController {
         }
         return  ResponseEntity.ok().body(studentService.getClassesForStudent(studentId));
     }
+
+
 }

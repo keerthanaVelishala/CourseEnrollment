@@ -2,11 +2,13 @@ package com.sample.classenrollment.controllers;
 
 import com.sample.classenrollment.models.Course;
 import com.sample.classenrollment.models.CourseStudent;
+import com.sample.classenrollment.models.EnrollmentInfoDTO;
 import com.sample.classenrollment.models.Student;
 import com.sample.classenrollment.repositories.CourseRepository;
 import com.sample.classenrollment.repositories.CourseStudentRepository;
 import com.sample.classenrollment.services.CourseService;
 import com.sample.classenrollment.services.StudentService;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/courses")
+@Transactional
 @CrossOrigin(origins = "http://localhost:4200")
 public class CourseController {
 
@@ -103,6 +106,39 @@ public class CourseController {
 
         courseService.unenrollStudent(course,student);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/viewAllRecords")
+    public ResponseEntity<List<EnrollmentInfoDTO>> viewAll(){
+        List<EnrollmentInfoDTO> allRecords = courseService.viewAll();
+        return new ResponseEntity<>(allRecords,HttpStatus.OK);
+    }
+
+
+    @PutMapping("/update-grade")
+    public ResponseEntity<String> updateStudentGrade(
+            @RequestParam Long courseId,
+            @RequestParam Long studentId,
+            @RequestParam String newGrade) {
+
+        Course course = courseService.getCourseById(courseId);
+        if(course==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Student student = studentService.getStudentById(studentId);
+        if(student==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Optional<CourseStudent> courseStudentOptional = courseStudentRepository.findByCourseCodeAndStudentId(course, student);
+
+        if (courseStudentOptional.isPresent()) {
+            CourseStudent courseStudent = courseStudentOptional.get();
+            courseStudentRepository.updateGradeById(courseStudent.getId(),newGrade);
+            return ResponseEntity.ok("Grade updated successfully");
+        } else {
+            return ResponseEntity.badRequest().body("CourseStudent not found with given courseId and studentId");
+        }
     }
 
 
