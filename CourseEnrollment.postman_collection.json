@@ -176,6 +176,49 @@
 				"url": "http://localhost:8080/students/5"
 			},
 			"response": []
+		},
+		{
+			"name": "viewAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/courses/viewAllRecords"
+			},
+			"response": []
+		},
+		{
+			"name": "update-grade",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/courses/update-grade?courseId=1&studentId=3&newGrade=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"update-grade"
+					],
+					"query": [
+						{
+							"key": "courseId",
+							"value": "1"
+						},
+						{
+							"key": "studentId",
+							"value": "3"
+						},
+						{
+							"key": "newGrade",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
