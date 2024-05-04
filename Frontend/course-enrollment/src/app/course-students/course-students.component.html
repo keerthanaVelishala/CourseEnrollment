@@ -11,7 +11,7 @@
     <td>{{ student.major }}</td>
     <td>{{ student.expectedGraduationDate }}</td>
     <td>
-      <button *ngIf="isEnrolled(student)" (click)="deleteStudent(student.studentId)">Delete</button>
+      <button *ngIf="isEnrolled(student)" (click)="deleteStudent(student.studentId)" style="background-color: red" >Delete</button>
       <button *ngIf="!isEnrolled(student)" (click)="addStudent(student.studentId)">Add</button>
     </td>
   </tr>
