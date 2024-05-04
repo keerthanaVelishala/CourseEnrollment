@@ -4,6 +4,34 @@ This project implements a REST API using Spring Boot for managing courses and st
 
 ## Features
 
+## Front-end
+
+Used Angualar 11 version to develop.
+
+### Dashboard
+
+  Responsibilities are to:
+
+  - Listing all the students in the system, with a list of classes they are enrolled in.
+  - Can update grade for each student for each course.
+
+### Classes
+
+  Responsibilities are to:
+
+  - Creating, updating and deleting classes.
+  - Listing available classes.
+  - Enrolling and Unenrolling a student in a class.
+    
+### Students 
+
+  Responsibilities are to:
+
+  - Creating, updating and deleting students.
+  - Listing all students in the class.
+  - Listing all courses that student is enrolled into.
+
+--------------------------------------------------
 ### Course API Endpoints
 
 - **Get All Courses**:
